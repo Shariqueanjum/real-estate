@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux' ;
 import {signInSuccess , signInFailure , signInStart}   from '../redux/user/userSlice.js' ;
+import OAuth from '../components/OAuth.jsx';
 
 const SignIn = () => {
 
@@ -80,6 +81,8 @@ const SignIn = () => {
          className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           {isLoading ? 'Loading...' : 'Sign In'}
         </button>
+
+        <OAuth />
 
       </form>
 
