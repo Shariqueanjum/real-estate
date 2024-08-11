@@ -2,10 +2,11 @@ import {useSelector} from 'react-redux'
 import { useRef, useState , useEffect } from 'react'
 import {getDownloadURL, getStorage , ref , uploadBytes, uploadBytesResumable} from 'firebase/storage'
 import { app}   from '../firebase.js'
-import { updateUserFailure , updateUserStart , updateUserSuccess} from '../redux/user/userSlice.js'
+import { updateUserFailure , updateUserStart , updateUserSuccess , deleteUserStart , deleteUserSucess , deleteUserFailure} from '../redux/user/userSlice.js'
 import { useDispatch } from 'react-redux'
 
 const Profile = () => {
+  
   const {currentUser , isLoading , error} = useSelector((state)=>state.user);
   const fileRef = useRef(null) ;
   const [file , setFile] = useState(undefined);
@@ -63,7 +64,38 @@ const Profile = () => {
     }
 
 
- };      
+ };   
+ 
+ 
+ const handleDelete = async ()=>{
+    try {
+       dispatch(deleteUserStart());
+
+       const res = await fetch(`/api/user/delete/${currentUser._id}`,{
+        method :'DELETE',
+      
+     });
+     
+     const data = await res.json();
+
+     if(data.success === false){
+          dispatch(deleteUserFailure(data.message));
+          return ;
+     }
+
+     dispatch(deleteUserSucess(data));
+
+    } 
+    catch (error) {
+       dispatch(deleteUserFailure(error.message))
+    }  
+
+      
+
+
+
+
+ }
 
 
 
@@ -156,13 +188,14 @@ const Profile = () => {
         
         <button disabled={isLoading}
          className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
-             {isLoading ? 'updating...' : 'update'}
+             {isLoading ? 'Loading...' : 'update'}
           </button>
          
       </form>
 
        <div className='flex justify-between mt-5'>
-         <span className='text-red-700 cursor-pointer'>Delete account</span>
+         <span onClick={handleDelete}
+         className='text-red-700 cursor-pointer'>Delete account</span>
          <span className='text-red-700 cursor-pointer'>Sign out</span>
 
        </div>
