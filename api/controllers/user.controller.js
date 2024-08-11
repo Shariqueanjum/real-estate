@@ -22,7 +22,7 @@ export const updateUserInfo = async (req,res,next)=>{
            req.body.password = bcryptjs.hashSync(req.body.password , 10);
        } 
 
-       console.log("i am the id",req.params.id)
+      // console.log("i am the id",req.params.id)
 
    
        
