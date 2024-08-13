@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp'
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
 import { Outlet } from 'react-router-dom'
+import CreateListing from './pages/CreateListing'
 
 const App = () => {
   return (
@@ -23,11 +24,18 @@ const App = () => {
           <Route
              path="/profile"
              element={
-                <PrivateRoute >
-                    <Outlet/>
-                </PrivateRoute>
+                <PrivateRoute component={Profile} /> 
              }
           />
+
+          <Route
+             path="/create-listing"
+             element={
+                <PrivateRoute component={CreateListing} /> 
+             }
+          />
+
+         
 
      </Routes>
    

@@ -1,11 +1,13 @@
-import {useSelector} from 'react-redux'
-import { useRef, useState , useEffect } from 'react'
-import {getDownloadURL, getStorage , ref , uploadBytes, uploadBytesResumable} from 'firebase/storage'
-import { app}   from '../firebase.js'
+import {useSelector} from 'react-redux';
+import { useRef, useState , useEffect } from 'react';
+import {getDownloadURL, getStorage , ref , uploadBytes, uploadBytesResumable} from 'firebase/storage';
+import { app}   from '../firebase.js';
 import { updateUserFailure , updateUserStart , updateUserSuccess , 
          deleteUserStart , deleteUserSuccess , deleteUserFailure , 
-         signOutStart , signOutSuccess , signOutFailure} from '../redux/user/userSlice.js'
-import { useDispatch } from 'react-redux'
+         signOutStart , signOutSuccess , signOutFailure} from '../redux/user/userSlice.js';
+
+import { useDispatch } from 'react-redux';
+import {Link} from 'react-router-dom';
 
 const Profile = () => {
   
@@ -211,6 +213,10 @@ const Profile = () => {
          className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
              {isLoading ? 'Loading...' : 'update'}
           </button>
+
+        <Link to={"/create-listing"}  className='bg-green-700 text-white text-center rounded p-3 uppercase hover:opacity-95 disabled:opacity-80'>
+            Create Listing
+        </Link>
          
       </form>
 
