@@ -21,6 +21,8 @@ const Profile = () => {
   const [showListingsError , setShowListingsError] = useState(false);
   const [listingsLoading , setListingsLoading] = useState(false);
   const [userListings , setUserListings] = useState([]);
+  const [deletingListLoading , setDeletingListLoading] = useState(null);
+  const [showDeletingListError , setShowDeletingListError] = useState(false);
   const dispatch = useDispatch();
 
 
@@ -173,6 +175,31 @@ const Profile = () => {
          setShowListingsError(true);
          setListingsLoading(false);
      }
+ };
+
+ const handleListingsDelete = async(id)=>{
+      try {
+          setDeletingListLoading(id);
+          const res = await fetch(`/api/listing/delete/${id}`,{
+             method : 'DELETE'
+          });
+
+          const data = await res.json();
+          if(data.success === false){
+               setDeletingListLoading(null);
+               setShowDeletingListError(true);
+               return ;
+          }
+          setUserListings((prevListings)=> prevListings.filter((listing)=>listing._id !== id));
+          setDeletingListLoading(null);
+          setShowDeletingListError(false);
+      } 
+      catch (error) {
+        setDeletingListLoading(null);
+        setShowDeletingListError(true);
+      }
+
+
  }
 
 
@@ -289,9 +316,19 @@ const Profile = () => {
                         </Link>
                         <div className='flex flex-col items-center gap-2 mr-1'>
                             <button className='text-green-700 uppercase'>Edit</button>
-                            <button className='text-red-700 uppercase'>Delete</button>
+
+                            <button disabled={deletingListLoading}
+                             onClick={()=>handleListingsDelete(listing._id)}
+                             className='text-red-700 uppercase'>
+                             {deletingListLoading === listing._id ? 'Deleting...' : 'Delete' }
+                             
+                              </button>
+
+                              <p>{showDeletingListError ? 'Error while delleting the listing':''}</p>
+
+                             
                         </div>
-                      </div>
+                    </div>
                   )
                })}
 
