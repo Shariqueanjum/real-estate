@@ -35,7 +35,7 @@ app.use(cors(corsOptions));
 
 app.use("/api/user" , userRouter);
 app.use("/api/auth" , authRouter);
-app.use("api/listing" , listingRouter);
+app.use("/api/listing" , listingRouter);
 
 
 app.use((err, req, res, next) => {
