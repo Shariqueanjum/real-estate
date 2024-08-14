@@ -7,7 +7,7 @@ import { updateUserFailure , updateUserStart , updateUserSuccess ,
          signOutStart , signOutSuccess , signOutFailure} from '../redux/user/userSlice.js';
 
 import { useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link , useNavigate} from 'react-router-dom';
 
 const Profile = () => {
   
@@ -24,6 +24,7 @@ const Profile = () => {
   const [deletingListLoading , setDeletingListLoading] = useState(null);
   const [showDeletingListError , setShowDeletingListError] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
  console.log(currentUser)
@@ -297,7 +298,7 @@ const Profile = () => {
               <h1 className='text-2xl text-center mt-7 font-semibold'>Your Listings</h1>
                {userListings.map((listing)=>{
                   return(
-                      <div className='flex items-center justify-between border rounded-lg gap-4 p-3'>
+                      <div key={listing._id} className='flex items-center justify-between border rounded-lg gap-4 p-3'>
                         <Link to={`/listings/${listing._id}`}>
                            <img 
                               src={listing.imageUrls[0]}
@@ -315,7 +316,7 @@ const Profile = () => {
                             </p>
                         </Link>
                         <div className='flex flex-col items-center gap-2 mr-1'>
-                            <button className='text-green-700 uppercase'>Edit</button>
+                            <button onClick={()=>navigate(`/update-listing/${listing._id}`)} className='text-green-700 uppercase'>Edit</button>
 
                             <button disabled={deletingListLoading}
                              onClick={()=>handleListingsDelete(listing._id)}
@@ -323,7 +324,7 @@ const Profile = () => {
                              {deletingListLoading === listing._id ? 'Deleting...' : 'Delete' }
                              
                               </button>
-
+                                {/*  isme thora issue hai */}
                               <p>{showDeletingListError ? 'Error while delleting the listing':''}</p>
 
                              

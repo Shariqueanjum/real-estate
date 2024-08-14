@@ -9,6 +9,7 @@ import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
 import { Outlet } from 'react-router-dom'
 import CreateListing from './pages/CreateListing'
+import UpdateListing from './pages/UpdateListing'
 
 const App = () => {
   return (
@@ -33,6 +34,14 @@ const App = () => {
              element={
                 <PrivateRoute component={CreateListing} /> 
              }
+          />
+
+          <Route 
+             path='/update-listing/:id'
+             element={
+                <PrivateRoute component={UpdateListing} />
+             }
+          
           />
 
          
