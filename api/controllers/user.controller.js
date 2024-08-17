@@ -87,3 +87,22 @@ export const getUserListings = async (req,res,next)=>{
 
 
 };
+
+
+export const getUserDetails = async (req,res,next)=>{
+     console.log('hey i am inside controller');
+     
+    try {
+        const userFound = await User.findById(req.params.id);
+        if(!userFound) return next(errorHandler(404 , 'User not found'));
+        const {password , ...rest} = userFound._doc;
+        
+        res.status(200).json(rest);
+
+    } 
+    catch (error) {
+        next(error);
+    }
+
+
+};
