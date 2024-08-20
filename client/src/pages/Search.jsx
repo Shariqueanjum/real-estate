@@ -38,7 +38,7 @@ const Search = () => {
       if(e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer'){
             setSidebarData({
                 ...sidebarData,
-                [e.target.id]:e.target.checked
+                [e.target.id]:e.target.checked || e.target.checked === 'true' ? true : false,
             })
 
       }
@@ -110,11 +110,35 @@ const Search = () => {
             offer: offerFromUrl === 'true' ? true : false,
             sort: sortFromUrl || 'created_at',
             order: orderFromUrl || 'desc',
-         })
+         });
            
 
       }
 
+      const fetchListings = async()=>{
+         try {
+            const searchQuery = urlParams.toString();
+
+            const res = await fetch(`/api/listing/get?${searchQuery}`);
+            const data = await res.json();
+
+            if(data.success===false){
+                console.log("Error from if")
+            }
+  
+            console.log(data);
+         } catch (error) {
+            console.log(error.message,"Hey i am the error from fetchListings");
+         }
+
+
+
+
+
+
+      }
+       
+      fetchListings();
 
 
 

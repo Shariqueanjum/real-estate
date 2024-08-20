@@ -10,9 +10,11 @@ router.delete("/delete/:id" , verifyToken , deleteListing);
 
 router.post("/update/:id" , verifyToken , updateListing);
 
-router.get("/getListings , getListings") ;
-
 router.get("/getListing/:id" , getListing) ;
+
+router.get("/get" , getListings) ;
+
+
 
 
 
