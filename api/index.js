@@ -10,7 +10,10 @@ import path from "path";
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect(process.env.MONGODB_URL,{
+     connectTimeoutMS: 30000, // increase timeout to 30 seconds
+     socketTimeoutMS: 45000, // increase socket timeout
+})
 .then(()=>{
      console.log("connected to DB :)" )
 })
@@ -47,7 +50,7 @@ app.get('*', (req, res) => {
      res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
    });
 
-   
+
 
 app.use((err, req, res, next) => {
      const statusCode = err.statusCode || 500;
